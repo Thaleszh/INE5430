@@ -20,14 +20,18 @@ class Game(object):
             for player, data in self.player_data.items():
                 # data[1] = randint(0, data[0])
                 print("\nJogador: {}".format(player))
+                #realizar caso de entrada de palitos invalida
                 data[1] = int(input("Quantos palitos irá guardar na mão?\n"))
 
             for player in self.play_order:
                 print("\nJogador: {}".format(player))
                 hunch = int(input("Qual seu palpite?\n"))
-                if hunch not in hunches:
-                    self.player_data[player][2] = hunch
-                    hunches.append(hunch)
+
+                while (hunch in hunches):
+                        hunch = int(input("Palpite ja usado, Qual o seu novo palpite?\n"))
+               
+                self.player_data[player][2] = hunch
+                hunches.append(hunch)
 
             winner = self.round_won()
             if winner:
