@@ -39,11 +39,57 @@ class Game(object):
             print(self.player_data)
             self.reset()
 
-    def hunch(self):
-        pass
+    def hunch(self, player, hunches):
+        # seu palpite inicial eh pelo menos a sua quantidade de palitos
+        hunch = self.player_date[player][1]
+        # calcula os palitos dos jogadores anteriores atraves dos palpites destes
+        for other_player in play_order[0:play_order.index(player)]:
+            # media dos proximos jogadores
+            average = average(play_order[play_order.index(other_player):len(play_order)])
+            # soma ao palpite a quantidade de palitos estimado do jogador
+            hunch += self.player_date[other_player][2] - average[0]
+            # erros de arredondamento, adiciona a randomicidade esperada
+            rand += average[1]
+        # chama average com os jogadores remanescente
+        average = average(play_order[play_order.index(player):len(play_order)])
+        # caso o numero seja quebrado (0.5) adiciona-se 1 a randomicidade
+        rand += average[1]
+        #valor estimado, com metade da randomicidade
+        hunch += average[0] + rand //2
+
+        # caso o chute ja tenha sido usado, chutar o mais proximo possivel
+        # começando pelo lado mais proximo da media
+        if (average(play_order)[0] < hunch):
+            i = 0
+            while (hunch in hunches):
+                i +=1
+                if i % 2 == 0:
+                    hunch += i
+                else:
+                    hunch -= i
+        else:
+            i = 0
+            while (hunch in hunches):
+                i +=1
+                if i % 2 == 0:
+                    hunch -= i
+                else:
+                    hunch += i
+        # retorna seu chute
+        return hunch
+
+    def average(self, remaining_players):
+        result = 0
+        for player in remaining_players:
+            result += player_data[player][0]
+
+        # entrega a media do resultado, e se houve sobra entrega 1 no segundo argumento
+        return [result//2, result % 2]
+
 
     def reset(self):
         for player, data in self.player_data.items():
+            data[0] = 3
             data[1] = None
             data[2] = None
 
