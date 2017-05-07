@@ -10,10 +10,12 @@ inicio :- hipotese(Animal),
          write('Eu Sabia!');
          write('Que pena...'), 
          nl, 
-         write('Qual seria o nome deste animal?')
-         read(Nome), 
-         adiciona(Nome), 
-         write('Da proxima vez, saberei!'))
+         write('Qual seria o nome deste animal?'),
+         read(Nome),
+         write('Qual caracteristica nao dita que o animal tem?'),
+         read(Caracteristica),
+         adiciona(Nome, Caracteristica), 
+         write('Da proxima vez, saberei!')),
       nl,
       undo.
 
@@ -26,11 +28,11 @@ hipotese(avestruz)   :- avestruz, !.
 hipotese(pinguim)   :- pinguim, !.
 hipotese(desconhecido).             /* no diagnosis */
 
-adiciona(Animal):-
+adiciona(Animal, Caracteristica):-
   sims([], Clausulas),
   listaPraTupla(Clausulas, ListaDeClausulas),
   asserta(hipotese(Animal):- Animal, !),
-  assert(Animal:- ListaDeClausulas).
+  assert(Animal:- ListaDeClausulas, Caracteristica).
 
 
 sims(Lista, Final):-
