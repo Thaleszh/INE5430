@@ -18,7 +18,7 @@ hipotese(desconhecido).             /* no diagnosis */
 adiciona(Animal):-
   sims([], Clausulas),
   listaPraTupla(Clausulas, ListaDeClausulas),
-  assert(hipotese(Animal):- Animal, !),
+  asserta(hipotese(Animal):- Animal, !),
   assert(Animal:- ListaDeClausulas).
 
 
