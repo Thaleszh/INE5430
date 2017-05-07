@@ -11,9 +11,9 @@ inicio :- hipotese(Animal),
          write('Que pena...'), 
          nl, 
          write('Qual seria o nome deste animal?')
-        read(Nome), 
-        adiciona(Nome), 
-        write('Da proxima vez, saberei!'))
+         read(Nome), 
+         adiciona(Nome), 
+         write('Da proxima vez, saberei!'))
       nl,
       undo.
 
