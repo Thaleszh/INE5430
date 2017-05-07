@@ -3,6 +3,17 @@
 inicio :- hipotese(Animal),
       write('Eu acho que o seu animal é: '),
       write(Animal),
+      write('Eu acertei?'),
+      read(Resposta),
+      ( (Resposta = sim ; Resposta =s))
+        ->
+         write('Eu Sabia!');
+         write('Que pena...'), 
+         nl, 
+         write('Qual seria o nome deste animal?')
+        read(Nome), 
+        adiciona(Nome), 
+        write('Da proxima vez, saberei!'))
       nl,
       undo.
 
