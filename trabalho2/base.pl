@@ -65,7 +65,7 @@ pergunta(Questao) :-
     ( (Resposta == sim ; Resposta == s)
       ->
        assert(sim(Questao));
-       assert(sim(Questao)), fail).
+       assert(no(Questao)), fail).
 
 :- dynamic sim/1,nao/1.
 
