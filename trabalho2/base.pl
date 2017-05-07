@@ -3,9 +3,9 @@
 inicio :- hipotese(Animal),
       write('Eu acho que o seu animal é: '),
       write(Animal),
+      nl,
       write('Eu acertei?'),
       read(Resposta),
-      nl,
       ( (Resposta = sim ; Resposta =s)
         ->
          write('Eu Sabia!');
@@ -13,10 +13,8 @@ inicio :- hipotese(Animal),
          nl, 
          write('Qual seria o nome deste animal?'),
          read(Nome),
-         nl.
          write('Qual caracteristica nao dita que o animal tem?'),
          read(Caracteristica),
-         nl,
          adiciona(Nome, Caracteristica), 
          write('Da proxima vez, saberei!')),
       nl,
@@ -33,9 +31,12 @@ hipotese(desconhecido).             /* no diagnosis */
 
 adiciona(Animal, Caracteristica):-
   sims([], Clausulas),
-  listaPraTupla(Clausulas, ListaDeClausulas). /*,
-  asserta(hipotese(Animal):- Animal, !),
-  assert(Animal:- ListaDeClausulas, Caracteristica).*/
+  listaPraTupla(Clausulas, ListaDeClausulas),
+  head = hipotese(Animal),
+  dynamic(head),
+  body = (ListaDeClausulas, Caracteristica),
+  asserta(head :- (Animal, !)),
+  assert(Animal:- body).
 
 
 sims(Lista, Final):-
