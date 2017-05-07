@@ -7,12 +7,13 @@ inicio :- hipotese(Animal),
       undo.
 
 /* hipoteses a serem testadas */
+hipotese(leao)     :- leao, !.
 hipotese(tigre)     :- tigre, !.
 hipotese(girafa)   :- girafa, !.
 hipotese(zebra)     :- zebra, !.
 hipotese(avestruz)   :- avestruz, !.
-hipotese(penguin)   :- penguin, !.
-hipotese(unknown).             /* no diagnosis */
+hipotese(pinguim)   :- penguin, !.
+hipotese(desconhecido).             /* no diagnosis */
 
 adiciona(Animal):-
   sims([], Clausulas),
@@ -23,7 +24,7 @@ adiciona(Animal):-
 
 sims(Lista, Final):-
   sim(Clausula),
-  retract(sim(Clausula))
+  retract(sim(Clausula)),
   sims([Lista|verifica(Clausula)], Final).
 
 sims(Lista, Lista).
@@ -37,7 +38,7 @@ leao :- mamifero,
         carnivoro,
         verifica("vive nas savanas").
 tigre :- mamifero,
-         carnivoro.
+         carnivoro,
          verifica("tem listras").
 girafa :- ruminante,
           verifica("tem pescoço longo").
@@ -52,21 +53,21 @@ pinguim :- ave,
 mamifero :- verifica("é um mamífero").
 ruminante :- verifica("é um ruminante").
 ave :- verifica("é uma ave").
-carnivoro :- verifica("é carnivoro")
+carnivoro :- verifica("é carnivoro").
 
 /* como se pergunta algo */
-pergunta(Questão) :-
+pergunta(Questao) :-
     write('O seu animal tem a seguinte caracteristica: '),
-    write(Questão,
+    write(Questao),
     write('? '),
     read(Resposta),
     nl,
-    ( (Resposta == yes ; Resposta == y)
+    ( (Resposta == sim ; Resposta == s)
       ->
-       assert(yes(Question)) ;
-       assert(no(Question)), fail).
+       assert(sim(Questao));
+       assert(sim(Questao)), fail).
 
-:- dynamic yes/1,no/1.
+:- dynamic sim/1,nao/1.
 
 /* Como se verifica algo */
 verifica(S) :-
