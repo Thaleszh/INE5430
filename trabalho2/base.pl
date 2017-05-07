@@ -3,10 +3,9 @@
 inicio :- hipotese(Animal),
       write('Eu acho que o seu animal é: '),
       write(Animal),
-      nl,
       write('Eu acertei?'),
-      nl,
       read(Resposta),
+      nl,
       ( (Resposta = sim ; Resposta =s)
         ->
          write('Eu Sabia!');
@@ -14,11 +13,11 @@ inicio :- hipotese(Animal),
          nl, 
          write('Qual seria o nome deste animal?'),
          read(Nome),
-         nl,
+         nl.
          write('Qual caracteristica nao dita que o animal tem?'),
          read(Caracteristica),
-         adiciona(Nome, Caracteristica),
-         nl, 
+         nl,
+         adiciona(Nome, Caracteristica), 
          write('Da proxima vez, saberei!')),
       nl,
       undo.
@@ -34,9 +33,9 @@ hipotese(desconhecido).             /* no diagnosis */
 
 adiciona(Animal, Caracteristica):-
   sims([], Clausulas),
-  listaPraTupla(Clausulas, ListaDeClausulas),
+  listaPraTupla(Clausulas, ListaDeClausulas). /*,
   asserta(hipotese(Animal):- Animal, !),
-  assert(Animal:- ListaDeClausulas, Caracteristica).
+  assert(Animal:- ListaDeClausulas, Caracteristica).*/
 
 
 sims(Lista, Final):-
@@ -80,20 +79,16 @@ pergunta(Questao) :-
     write('? '),
     read(Resposta),
     nl,
-    ( (Resposta == sim; Resposta == s)
+    ( (Resposta == sim ; Resposta == s)
       ->
        assert(sim(Questao));
-       (Resposta == talvez
-       ->
-         assert(talvez(Questao));
-         assert(nao(Questao)))),
-    fail.
+       assert(nao(Questao)), fail).
 
-:- dynamic sim/1, nao/1, talvez/1.
+:- dynamic sim/1,nao/1.
 
 /* Como se verifica algo */
 verifica(S) :-
-   ( (sim(S) ; talvez(S))
+   (sim(S)
     ->
     true ;
     (nao(S)
@@ -104,5 +99,4 @@ verifica(S) :-
 /* disfaz sim/nao */
 undo :- retract(sim(_)),fail.
 undo :- retract(nao(_)),fail.
-undo :- retract(talvez(_)), fail.
 undo.
