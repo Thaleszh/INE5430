@@ -3,7 +3,9 @@
 inicio :- hipotese(Animal),
       write('Eu acho que o seu animal é: '),
       write(Animal),
+      nl,
       write('Eu acertei?'),
+      nl,
       read(Resposta),
       ( (Resposta = sim ; Resposta =s)
         ->
@@ -12,9 +14,11 @@ inicio :- hipotese(Animal),
          nl, 
          write('Qual seria o nome deste animal?'),
          read(Nome),
+         nl,
          write('Qual caracteristica nao dita que o animal tem?'),
          read(Caracteristica),
-         adiciona(Nome, Caracteristica), 
+         adiciona(Nome, Caracteristica),
+         nl, 
          write('Da proxima vez, saberei!')),
       nl,
       undo.
@@ -76,16 +80,20 @@ pergunta(Questao) :-
     write('? '),
     read(Resposta),
     nl,
-    ( (Resposta == sim ; Resposta == s)
+    ( (Resposta == sim; Resposta == s)
       ->
        assert(sim(Questao));
-       assert(nao(Questao)), fail).
+       (Resposta == talvez
+       ->
+         assert(talvez(Questao));
+         assert(nao(Questao)))),
+    fail.
 
-:- dynamic sim/1,nao/1.
+:- dynamic sim/1, nao/1, talvez/1.
 
 /* Como se verifica algo */
 verifica(S) :-
-   (sim(S)
+   ( (sim(S) ; talvez(S))
     ->
     true ;
     (nao(S)
@@ -96,4 +104,5 @@ verifica(S) :-
 /* disfaz sim/nao */
 undo :- retract(sim(_)),fail.
 undo :- retract(nao(_)),fail.
+undo :- retract(talvez(_)), fail.
 undo.
