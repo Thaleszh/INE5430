@@ -12,7 +12,7 @@ hipotese(tigre)     :- tigre, !.
 hipotese(girafa)   :- girafa, !.
 hipotese(zebra)     :- zebra, !.
 hipotese(avestruz)   :- avestruz, !.
-hipotese(pinguim)   :- penguin, !.
+hipotese(pinguim)   :- pinguim, !.
 hipotese(desconhecido).             /* no diagnosis */
 
 adiciona(Animal):-
@@ -39,11 +39,11 @@ leao :- mamifero,
         verifica("vive nas savanas").
 tigre :- mamifero,
          carnivoro,
-         verifica("tem listras").
+         listrado.
 girafa :- ruminante,
           verifica("tem pescoço longo").
 zebra :- ruminante,
-         verifica("tem listras").
+         listrado.
 avestruz :- ave,
             verifica("tem pescoço longo").
 pinguim :- ave,
@@ -54,6 +54,7 @@ mamifero :- verifica("é um mamífero").
 ruminante :- verifica("é um ruminante").
 ave :- verifica("é uma ave").
 carnivoro :- verifica("é carnivoro").
+listrado :- verifica("tem listras").
 
 /* como se pergunta algo */
 pergunta(Questao) :-
@@ -65,7 +66,7 @@ pergunta(Questao) :-
     ( (Resposta == sim ; Resposta == s)
       ->
        assert(sim(Questao));
-       assert(sim(Questao)), fail).
+       assert(nao(Questao)), fail).
 
 :- dynamic sim/1,nao/1.
 
