@@ -5,7 +5,7 @@ inicio :- hipotese(Animal),
       write(Animal),
       write('Eu acertei?'),
       read(Resposta),
-      ( (Resposta = sim ; Resposta =s))
+      ( (Resposta = sim ; Resposta =s)
         ->
          write('Eu Sabia!');
          write('Que pena...'), 
