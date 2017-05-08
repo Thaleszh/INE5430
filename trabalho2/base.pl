@@ -27,8 +27,9 @@ hipotese(girafa)   :- girafa, !.
 hipotese(zebra)     :- zebra, !.
 hipotese(avestruz)   :- avestruz, !.
 hipotese(pinguim)   :- pinguim, !.
-hipotese(desconhecido).             /* no diagnosis */
+hipotese(desconhecido).             /* sem conhecimento */
 
+/* parte não funcional
 adiciona(Animal, Caracteristica):-
   sims([], Clausulas),
   listaPraTupla(Clausulas, ListaDeClausulas),
@@ -48,7 +49,8 @@ sims(Lista, Lista).
 
 listaPraTupla([X], X).
 listaPraTupla([H|T], (H, Resto)) :-
-  listaPraTupla(T, Resto).
+  listaPraTupla(T, Resto). 
+ */
 
 /* regras de identificação */
 leao :- mamifero,
